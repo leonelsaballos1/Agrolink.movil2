@@ -272,46 +272,136 @@ export default function ListarClientes({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#ffffffff', padding: 20 },
-  header: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
-  title: { fontSize: 26, fontWeight: '700' },
-  botonAgregar: { backgroundColor: '#d0e8f2', padding: 10, borderRadius: 50, elevation: 8 },
+  container: { 
+    flex: 1, 
+    backgroundColor: "#ffffffff", 
+    padding: 20 
+  },
+
+  header: { 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    marginBottom: 10 
+  },
+
+  title: { 
+    fontSize: 26, 
+    fontWeight: "700" 
+  },
+
+  botonAgregar: { 
+    backgroundColor: "#d0e8f2", 
+    padding: 10, 
+    borderRadius: 50, 
+    elevation: 8 
+  },
+
   searchContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     borderRadius: 10,
     paddingHorizontal: 12,
     borderWidth: 1,
-    borderColor: '#4caf50',
+    borderColor: "#4caf50",
     marginBottom: 15,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
-  inputBuscar: { fontSize: 16, paddingVertical: 8, color: '#333' },
+
+  inputBuscar: { 
+    fontSize: 16, 
+    paddingVertical: 8, 
+    color: "#333" 
+  },
+
   item: {
-    backgroundColor: '#fefefeff',
+    backgroundColor: "#fefefeff",
     borderRadius: 16,
     marginBottom: 15,
     padding: 20,
-    flexDirection: 'row',
+    flexDirection: "row",
     elevation: 6,
   },
-  text: { fontSize: 16, marginBottom: 6, color: '#333', fontWeight: '600' },
-  label: { fontWeight: '700', color: '#00796b' },
-  rowHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
-  botones: { alignItems: 'center', gap: 10 },
-  botonEditar: { backgroundColor: '#bbdefb', padding: 8, borderRadius: 30 },
-  botonEliminar: { backgroundColor: '#ffcdd2', padding: 8, borderRadius: 30 },
-  estadoContainer: { marginTop: 10, padding: 10, backgroundColor: '#c8e6c9', borderRadius: 10 },
-  estadoTitulo: { fontWeight: '700', marginBottom: 5 },
-  estadoFila: { flexDirection: 'row', alignItems: 'center', marginBottom: 5 },
-  btnToggle: {
-    borderWidth: 1, borderColor: '#999',
-    borderRadius: 8, paddingHorizontal: 12, paddingVertical: 4,
+
+  text: { 
+    fontSize: 16, 
+    marginBottom: 6, 
+    color: "#333", 
+    fontWeight: "600" 
   },
-  btnActivo: { backgroundColor: '#4caf50', borderColor: '#4caf50' },
-  pickerPerdida: { height: 50, width: 120, marginRight: 8, backgroundColor: '#fff' },
+
+  label: { 
+    fontWeight: "700", 
+    color: "#00796b" 
+  },
+
+  rowHeader: { 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    marginBottom: 10 
+  },
+
+  botones: { 
+    alignItems: "center", 
+    gap: 10 
+  },
+
+  botonEditar: { 
+    backgroundColor: "#bbdefb", 
+    padding: 8, 
+    borderRadius: 30 
+  },
+
+  botonEliminar: { 
+    backgroundColor: "#ffcdd2", 
+    padding: 8, 
+    borderRadius: 30 
+  },
+
+  estadoContainer: { 
+    marginTop: 10, 
+    padding: 10, 
+    backgroundColor: "#c8e6c9", 
+    borderRadius: 10 
+  },
+
+  estadoTitulo: { 
+    fontWeight: "700", 
+    marginBottom: 5 
+  },
+
+  estadoFila: { 
+    flexDirection: "row", 
+    alignItems: "center", 
+    marginBottom: 5 
+  },
+
+  btnToggle: {
+    borderWidth: 1, 
+    borderColor: "#999",
+    borderRadius: 8, 
+    paddingHorizontal: 12, 
+    paddingVertical: 4,
+  },
+
+  btnActivo: { 
+    backgroundColor: "#4caf50", 
+    borderColor: "#4caf50" 
+  },
+
+  pickerPerdida: { 
+    height: 50, 
+    width: 120, 
+    marginRight: 8, 
+    backgroundColor: "#fff" 
+  },
+
   inputPerdida: {
-    borderWidth: 1, borderColor: '#999',
-    borderRadius: 8, paddingHorizontal: 8,
-    width: 70, height: 40, textAlign: 'center',
+    borderWidth: 1, 
+    borderColor: "#999",
+    borderRadius: 8, 
+    paddingHorizontal: 8,
+    width: 70, 
+    height: 40, 
+    textAlign: "center",
   },
 });
+

@@ -293,41 +293,108 @@ export default function RegistrarCliente({ route }) {
   );
 }
 
+
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#ffffffff' },
-  scrollContainer: { padding: 20, paddingBottom: 40 },
-  title: { fontSize: 22, fontWeight: '700', marginBottom: 20, textAlign: 'center' },
-  label: { fontSize: 16, fontWeight: '600', marginTop: 10 },
+  container: { 
+    flex: 1, 
+    backgroundColor: "#ffffffff" 
+  },
+
+  scrollContainer: { 
+    padding: 20, 
+    paddingBottom: 40 
+  },
+
+  title: { 
+    fontSize: 22, 
+    fontWeight: "700", 
+    marginBottom: 20, 
+    textAlign: "center" 
+  },
+
+  label: { 
+    fontSize: 16, 
+    fontWeight: "600", 
+    marginTop: 10 
+  },
+
   inputContainer: {
-    flexDirection: 'row', alignItems: 'center',
-    backgroundColor: '#ffffffff', borderRadius: 10,
-    paddingHorizontal: 10, marginBottom: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#ffffffff",
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginBottom: 10,
   },
-  input: { flex: 1, height: 40, marginLeft: 10 },
-  genderContainer: { flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15, flexWrap: 'wrap' },
+
+  input: { 
+    flex: 1, 
+    height: 40, 
+    marginLeft: 10 
+  },
+
+  genderContainer: { 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    marginVertical: 15, 
+    flexWrap: "wrap" 
+  },
+
   genderButton: {
-    flexDirection: 'row', borderWidth: 2, borderColor: '#4caf50',
-    borderRadius: 20, paddingHorizontal: 12, paddingVertical: 8,
-    margin: 4, alignItems: 'center', minWidth: '45%', justifyContent: 'center',
+    flexDirection: "row",
+    borderWidth: 2,
+    borderColor: "#4caf50",
+    borderRadius: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    margin: 4,
+    alignItems: "center",
+    minWidth: "45%",
+    justifyContent: "center",
   },
-  genderSelected: { backgroundColor: '#4caf50' },
-  genderText: { marginLeft: 5, fontWeight: '600', color: '#4caf50', textAlign: 'center' },
-  genderTextSelected: { color: '#fff' },
+
+  genderSelected: { 
+    backgroundColor: "#4caf50" 
+  },
+
+  genderText: { 
+    marginLeft: 5, 
+    fontWeight: "600", 
+    color: "#4caf50", 
+    textAlign: "center" 
+  },
+
+  genderTextSelected: { 
+    color: "#fff" 
+  },
+
   variedadesContainer: {
     borderWidth: 1,
-    borderColor: '#4caf50',
+    borderColor: "#4caf50",
     borderRadius: 10,
     height: 300,
     marginTop: 10,
-    backgroundColor: '#f1f8e9',
+    backgroundColor: "#f1f8e9",
   },
+
   variedadesScroll: {
     paddingHorizontal: 5,
   },
+
   saveButton: {
-    flexDirection: 'row', backgroundColor: '#4caf50',
-    padding: 14, borderRadius: 30, alignItems: 'center',
-    justifyContent: 'center', marginTop: 10,
+    flexDirection: "row",
+    backgroundColor: "#4caf50",
+    padding: 14,
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
   },
-  saveButtonText: { color: '#fff', fontWeight: '700', fontSize: 18, marginLeft: 10 },
+
+  saveButtonText: { 
+    color: "#fff", 
+    fontWeight: "700", 
+    fontSize: 18, 
+    marginLeft: 10 
+  },
 });

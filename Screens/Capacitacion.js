@@ -180,15 +180,82 @@ export default function CapacitacionesEnLinea() {
 }
 
 const styles = StyleSheet.create({
-  scrollContent: { padding: 16, paddingTop: 60, backgroundColor: "#E8F5E9" },
-  header: { fontSize: 22, fontWeight: "bold", marginBottom: 16, textAlign: "center", color: "#2E7D32" },
-  card: { backgroundColor: "#fff", padding: 16, marginBottom: 16, borderRadius: 12, elevation: 3 },
-  sectionHeader: { fontWeight: "bold", marginBottom: 4, fontSize: 16, color: "#388E3C" },
-  linkButton: { flexDirection: "row", alignItems: "center", backgroundColor: "#2196F3", padding: 12, borderRadius: 8, marginTop: 10 },
-  linkText: { color: "#fff", marginLeft: 8, fontWeight: "bold", flexShrink: 1 },
-  linkInline: { color: "#1976D2", marginTop: 4, fontWeight: "bold" },
-  searchInput: { backgroundColor: "#fff", borderRadius: 8, padding: 10, marginBottom: 20, borderWidth: 1, borderColor: "#ccc" },
-  actions: { flexDirection: "row", justifyContent: "space-between", marginTop: 12 },
-  actionButton: { flexDirection: "row", alignItems: "center", padding: 10, borderRadius: 8 },
-  actionText: { color: "#fff", marginLeft: 6, fontWeight: "bold" },
+  scrollContent: { 
+    padding: 16, 
+    paddingTop: 60, 
+    backgroundColor: "#E8F5E9" 
+  },
+
+  header: { 
+    fontSize: 22, 
+    fontWeight: "bold", 
+    marginBottom: 16, 
+    textAlign: "center", 
+    color: "#2E7D32" 
+  },
+
+  card: { 
+    backgroundColor: "#fff", 
+    padding: 16, 
+    marginBottom: 16, 
+    borderRadius: 12, 
+    elevation: 3 
+  },
+
+  sectionHeader: { 
+    fontWeight: "bold", 
+    marginBottom: 4, 
+    fontSize: 16, 
+    color: "#388E3C" 
+  },
+
+  linkButton: { 
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#2196F3",
+    padding: 12, 
+    borderRadius: 8, 
+    marginTop: 10 
+  },
+
+  linkText: { 
+    color: "#fff", 
+    marginLeft: 8, 
+    fontWeight: "bold", 
+    flexShrink: 1 
+  },
+
+  linkInline: { 
+    color: "#1976D2", 
+    marginTop: 4, 
+    fontWeight: "bold" 
+  },
+
+  searchInput: { 
+    backgroundColor: "#fff", 
+    borderRadius: 8, 
+    padding: 10, 
+    marginBottom: 20, 
+    borderWidth: 1, 
+    borderColor: "#ccc" 
+  },
+
+  actions: { 
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 12 
+  },
+
+  actionButton: { 
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10, 
+    borderRadius: 8 
+  },
+
+  actionText: { 
+    color: "#fff", 
+    marginLeft: 6, 
+    fontWeight: "bold" 
+  },
 });

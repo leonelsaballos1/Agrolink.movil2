@@ -9,15 +9,9 @@ import {
   Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { auth, db, storage } from "../BasedeDatos/Firebase";
+import { auth, db } from "../BasedeDatos/Firebase";
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import * as ImagePicker from "expo-image-picker";
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  deleteObject,
-} from "firebase/storage";
 import { signOut, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 
 export default function Misdatos({ navigation }) {
@@ -43,30 +37,12 @@ export default function Misdatos({ navigation }) {
     fetchUserData();
   }, []);
 
-  const uriToBlob = (uri) => {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function () {
-        reject(new Error("Error al convertir imagen en blob"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", uri, true);
-      xhr.send(null);
-    });
-  };
-
-  const uploadImage = async (uri) => {
+  const uploadImage = async (base64) => {
     try {
       const uid = auth.currentUser.uid;
-      const blob = await uriToBlob(uri);
-      const storageRef = ref(storage, `perfil/${uid}.jpg`);
-      await uploadBytes(storageRef, blob);
-      const downloadURL = await getDownloadURL(storageRef);
-      await updateDoc(doc(db, "usuarios", uid), { foto: downloadURL });
-      setUserData((prev) => ({ ...prev, foto: downloadURL }));
+      const imageRef = doc(db, "usuarios", uid);
+      await updateDoc(imageRef, { foto: `data:image/jpeg;base64,${base64}` });
+      setUserData((prev) => ({ ...prev, foto: `data:image/jpeg;base64,${base64}` }));
       Alert.alert("✅ Éxito", "Tu foto de perfil se actualizó");
     } catch (error) {
       console.error("Error al subir imagen:", error);
@@ -85,30 +61,24 @@ export default function Misdatos({ navigation }) {
       allowsEditing: true,
       aspect: [1, 1],
       quality: 0.7,
+      base64: true, // Solicitar base64
     });
     if (!result.canceled) {
-      uploadImage(result.assets[0].uri);
+      uploadImage(result.assets[0].base64);
     }
   };
 
-  // 🔹 Eliminar cuenta (Auth + Firestore + Storage)
+  // 🔹 Eliminar cuenta (Auth + Firestore)
   const deleteAccount = async () => {
     try {
       const user = auth.currentUser;
       if (!user) return;
       const uid = user.uid;
 
-      // 1. Eliminar foto en Storage
-      try {
-        await deleteObject(ref(storage, `perfil/${uid}.jpg`));
-      } catch (e) {
-        console.log("No había foto en Storage o ya eliminada.");
-      }
-
-      // 2. Eliminar documento en Firestore
+      // 1. Eliminar documento en Firestore
       await deleteDoc(doc(db, "usuarios", uid));
 
-      // 3. Eliminar usuario en Authentication
+      // 2. Eliminar usuario en Authentication
       await deleteUser(user);
 
       Alert.alert("✅ Cuenta eliminada", "Tu cuenta fue borrada correctamente.");
@@ -197,13 +167,76 @@ export default function Misdatos({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#ffffffff", alignItems: "center", paddingTop: 50 },
-  avatar: { width: 120, height: 120, borderRadius: 60, marginBottom: 15, borderWidth: 3, borderColor: "#fff" },
-  name: { fontSize: 22, fontWeight: "bold", color: "#000" },
-  role: { fontSize: 16, marginTop: 5, color: "#333" },
-  email: { fontSize: 14, marginBottom: 20, color: "#333" },
-  button: { flexDirection: "row", backgroundColor: "#2e7d32", padding: 12, borderRadius: 10, marginTop: 12, width: "70%", justifyContent: "center", alignItems: "center" },
-  buttonLogout: { flexDirection: "row", backgroundColor: "#b71c1c", padding: 12, borderRadius: 10, marginTop: 20, width: "70%", justifyContent: "center", alignItems: "center" },
-  buttonDelete: { flexDirection: "row", backgroundColor: "#4a148c", padding: 12, borderRadius: 10, marginTop: 20, width: "70%", justifyContent: "center", alignItems: "center" },
-  buttonText: { color: "white", fontWeight: "bold", marginLeft: 6 },
+  container: { 
+    flex: 1, 
+    backgroundColor: "#ffffffff", 
+    alignItems: "center", 
+    paddingTop: 50 
+  },
+
+  avatar: { 
+    width: 120, 
+    height: 120, 
+    borderRadius: 60, 
+    marginBottom: 15, 
+    borderWidth: 3, 
+    borderColor: "#fff" 
+  },
+
+  name: { 
+    fontSize: 22, 
+    fontWeight: "bold", 
+    color: "#000" 
+  },
+
+  role: { 
+    fontSize: 16, 
+    marginTop: 5, 
+    color: "#333" 
+  },
+
+  email: { 
+    fontSize: 14, 
+    marginBottom: 20, 
+    color: "#333" 
+  },
+
+  button: { 
+    flexDirection: "row",
+    backgroundColor: "#2e7d32",
+    padding: 12, 
+    borderRadius: 10, 
+    marginTop: 12, 
+    width: "70%",
+    justifyContent: "center",
+    alignItems: "center" 
+  },
+
+  buttonLogout: { 
+    flexDirection: "row",
+    backgroundColor: "#b71c1c",
+    padding: 12, 
+    borderRadius: 10, 
+    marginTop: 20, 
+    width: "70%",
+    justifyContent: "center",
+    alignItems: "center" 
+  },
+
+  buttonDelete: { 
+    flexDirection: "row",
+    backgroundColor: "#4a148c",
+    padding: 12, 
+    borderRadius: 10, 
+    marginTop: 20, 
+    width: "70%",
+    justifyContent: "center",
+    alignItems: "center" 
+  },
+
+  buttonText: { 
+    color: "white", 
+    fontWeight: "bold", 
+    marginLeft: 6 
+  },
 });

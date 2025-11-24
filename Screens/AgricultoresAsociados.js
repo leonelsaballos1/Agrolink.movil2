@@ -102,9 +102,41 @@ export default function AgregarCapacitacion() {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 16, backgroundColor: "#E8F5E9" },
-  header: { fontSize: 22, fontWeight: "bold", marginBottom: 16, textAlign: "center", color: "#2E7D32" },
-  input: { backgroundColor: "#fff", padding: 12, borderRadius: 8, marginBottom: 12, borderWidth: 1, borderColor: "#ccc" },
-  saveButton: { flexDirection: "row", alignItems: "center", backgroundColor: "#388E3C", padding: 14, borderRadius: 8, justifyContent: "center", marginTop: 20 },
-  saveText: { color: "#fff", marginLeft: 8, fontWeight: "bold" },
+  container: { 
+    padding: 16, 
+    backgroundColor: "#E8F5E9" 
+  },
+
+  header: { 
+    fontSize: 22, 
+    fontWeight: "bold", 
+    marginBottom: 16, 
+    textAlign: "center", 
+    color: "#2E7D32" 
+  },
+
+  input: { 
+    backgroundColor: "#fff", 
+    padding: 12, 
+    borderRadius: 8, 
+    marginBottom: 12, 
+    borderWidth: 1, 
+    borderColor: "#ccc" 
+  },
+
+  saveButton: { 
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#388E3C",
+    padding: 14, 
+    borderRadius: 8, 
+    justifyContent: "center", 
+    marginTop: 20 
+  },
+
+  saveText: { 
+    color: "#fff", 
+    marginLeft: 8, 
+    fontWeight: "bold" 
+  },
 });
