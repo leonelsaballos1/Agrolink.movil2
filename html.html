@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa de Cultivos de Nicaragua</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style id="app-style">
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #edf7ee;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #app-container {
+      display: flex;
+      height: 100vh;
+      position: relative;
+    }
+
+    #sidebar {
+      width: 320px;
+      background-color: white;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    #sidebar.collapsed {
+      transform: translateX(-100%);
+    }
+
+    #sidebar-toggle {
+      position: absolute;
+      top: 20px;
+      left: 320px;
+      z-index: 1001;
+      background-color: white;
+      border-radius: 0 4px 4px 0;
+      padding: 10px;
+      cursor: pointer;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    #sidebar-toggle.collapsed {
+      left: 0;
+    }
+
+    #map-container {
+      flex-grow: 1;
+      height: 100%;
+      position: relative;
+    }
+
+    #map {
+      height: 100%;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo-icon {
+      font-size: 24px;
+      color: #2e7d32;
+      margin-right: 10px;
+    }
+
+    .logo-text {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+
+    .filter-section {
+      margin-bottom: 25px;
+    }
+
+    .filter-title {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .filter-title i {
+      margin-right: 8px;
+      color: #2e7d32;
+    }
+
+    .crop-list {
+      list-style-type: none;
+      margin-left: 10px;
+    }
+
+    .crop-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .crop-checkbox {
+      margin-right: 10px;
+    }
+
+    .crop-icon {
+      margin-right: 5px;
+      font-size: 16px;
+    }
+
+    .crop-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      margin-right: 8px;
+    }
+
+    .select-wrapper {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: white;
+      font-size: 14px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .season-filter {
+      margin-left: 10px;
+    }
+
+    .info-card {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background-color: white;
+      border-radius: 8px;
+      padding: 15px;
+      max-width: 300px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .info-card-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .info-card-title {
+      font-weight: 500;
+      font-size: 16px;
+      color: #2e7d32;
+    }
+
+    .info-card-close {
+      cursor: pointer;
+      color: #999;
+    }
+
+    .info-card-content {
+      font-size: 14px;
+    }
+
+    .info-card-item {
+      margin-bottom: 5px;
+      display: flex;
+    }
+
+    .info-card-label {
+      width: 80px;
+      font-weight: 500;
+    }
+
+    .info-card-action {
+      text-align: right;
+      margin-top: 10px;
+    }
+
+    .info-card-button {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .info-card-button:hover {
+      background-color: #1b5e20;
+    }
+
+    .map-legend {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: white;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 999;
+      font-size: 12px;
+      max-width: 200px;
+    }
+
+    .legend-title {
+      font-weight: 500;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    .legend-color {
+      width: 15px;
+      height: 15px;
+      border-radius: 3px;
+      margin-right: 8px;
+    }
+
+    .crop-legend-label {
+      display: flex;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      #sidebar {
+        width: 280px;
+        transform: translateX(-100%);
+      }
+
+      #sidebar.active {
+        transform: translateX(0);
+      }
+
+      #sidebar-toggle {
+        left: 0;
+      }
+
+      #sidebar-toggle.active {
+        left: 280px;
+      }
+
+      .map-legend {
+        bottom: 60px;
+        top: auto;
+        right: 10px;
+        max-width: 160px;
+      }
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      z-index: 900;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .bookmark-section {
+      margin-bottom: 20px;
+    }
+
+    .bookmark-button {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .bookmark-button:hover {
+      background-color: #1b5e20;
+    }
+
+    .loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .loading-spinner {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #2e7d32;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div id="app-container">
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <div class="logo-container">
+        <i class="fa-solid fa-seedling logo-icon"></i>
+        <span class="logo-text">Mapa de Cultivos</span>
+      </div>
+      
+      <div class="bookmark-section">
+        <button class="bookmark-button" id="save-bookmark">
+          <i class="fa-solid fa-bookmark"></i> Guardar vista actual
+        </button>
+        <div class="select-wrapper">
+          <select id="bookmark-select">
+            <option value="">-- Cargar vista guardada --</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Crop filter -->
+      <div class="filter-section">
+        <h3 class="filter-title">
+          <i class="fa-solid fa-filter"></i> Filtrar por cultivo
+        </h3>
+        <ul class="crop-list">
+          <li class="crop-item">
+            <input type="checkbox" class="crop-checkbox" value="maiz" checked>
+            <div class="crop-color" style="background-color: #FFD700;"></div>
+            <span class="crop-icon">🌽</span>
+            <span>Maíz</span>
+          </li>
+          <li class="crop-item">
+            <input type="checkbox" class="crop-checkbox" value="frijol" checked>
+            <div class="crop-color" style="background-color: #8B4513;"></div>
+            <span class="crop-icon">🌱</span>
+            <span>Frijol</span>
+          </li>
+          <li class="crop-item">
+            <input type="checkbox" class="crop-checkbox" value="arroz" checked>
+            <div class="crop-color" style="background-color: #F5DEB3;"></div>
+            <span class="crop-icon">🌾</span>
+            <span>Arroz</span>
+          </li>
+          <li class="crop-item">
+            <input type="checkbox" class="crop-checkbox" value="cafe" checked>
+            <div class="crop-color" style="background-color: #A52A2A;"></div>
+            <span class="crop-icon">☕</span>
+            <span>Café</span>
+          </li>
+          <li class="crop-item">
+            <input type="checkbox" class="crop-checkbox" value="cacao" checked>
+            <div class="crop-color" style="background-color: #654321;"></div>
+            <span class="crop-icon">🍫</span>
+            <span>Cacao</span>
+          </li>
+          <li class="crop-item">
+            <input type="checkbox" class="crop-checkbox" value="mani" checked>
+            <div class="crop-color" style="background-color: #DEB887;"></div>
+            <span class="crop-icon">🥜</span>
+            <span>Maní</span>
+          </li>
+          <li class="crop-item">
+            <input type="checkbox" class="crop-checkbox" value="sorgo" checked>
+            <div class="crop-color" style="background-color: #CD853F;"></div>
+            <span class="crop-icon">🌾</span>
+            <span>Sorgo</span>
+          </li>
+          <li class="crop-item">
+            <input type="checkbox" class="crop-checkbox" value="banano" checked>
+            <div class="crop-color" style="background-color: #FFFF00;"></div>
+            <span class="crop-icon">🍌</span>
+            <span>Banano</span>
+          </li>
+          <li class="crop-item">
+            <input type="checkbox" class="crop-checkbox" value="hortalizas" checked>
+            <div class="crop-color" style="background-color: #228B22;"></div>
+            <span class="crop-icon">🥬</span>
+            <span>Hortalizas</span>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Season filter -->
+      <div class="filter-section">
+        <h3 class="filter-title">
+          <i class="fa-solid fa-calendar"></i> Filtrar por temporada
+        </h3>
+        <div class="season-filter">
+          <div class="select-wrapper">
+            <select id="month-select">
+              <option value="">Todos los meses</option>
+              <option value="1">Enero</option>
+              <option value="2">Febrero</option>
+              <option value="3">Marzo</option>
+              <option value="4">Abril</option>
+              <option value="5">Mayo</option>
+              <option value="6">Junio</option>
+              <option value="7">Julio</option>
+              <option value="8">Agosto</option>
+              <option value="9">Septiembre</option>
+              <option value="10">Octubre</option>
+              <option value="11">Noviembre</option>
+              <option value="12">Diciembre</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Department filter -->
+      <div class="filter-section">
+        <h3 class="filter-title">
+          <i class="fa-solid fa-map"></i> Filtrar por departamento
+        </h3>
+        <div class="select-wrapper">
+          <select id="department-select">
+            <option value="">Todos los departamentos</option>
+            <option value="boaco">Boaco</option>
+            <option value="carazo">Carazo</option>
+            <option value="chinandega">Chinandega</option>
+            <option value="chontales">Chontales</option>
+            <option value="esteli">Estelí</option>
+            <option value="granada">Granada</option>
+            <option value="jinotega">Jinotega</option>
+            <option value="leon">León</option>
+            <option value="madriz">Madriz</option>
+            <option value="managua">Managua</option>
+            <option value="masaya">Masaya</option>
+            <option value="matagalpa">Matagalpa</option>
+            <option value="nueva-segovia">Nueva Segovia</option>
+            <option value="rivas">Rivas</option>
+            <option value="rio-san-juan">Río San Juan</option>
+            <option value="raccn">RACCN</option>
+            <option value="raccs">RACCS</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Sidebar toggle -->
+    <div id="sidebar-toggle">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+    
+    <!-- Map container -->
+    <div id="map-container">
+      <div id="map"></div>
+      
+      <!-- Map legend -->
+      <div class="map-legend">
+        <div class="legend-title">Leyenda</div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #FFD700;"></div>
+          <span class="crop-legend-label">🌽 Maíz</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #8B4513;"></div>
+          <span class="crop-legend-label">🌱 Frijol</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #F5DEB3;"></div>
+          <span class="crop-legend-label">🌾 Arroz</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #A52A2A;"></div>
+          <span class="crop-legend-label">☕ Café</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #654321;"></div>
+          <span class="crop-legend-label">🍫 Cacao</span>
+        </div>
+      </div>
+      
+      <!-- Info card -->
+      <div class="info-card" id="info-card">
+        <div class="info-card-header">
+          <div class="info-card-title">
+            <i class="fa-solid fa-location-dot"></i> <span id="info-card-location">Juigalpa</span>
+          </div>
+          <div class="info-card-close" id="info-card-close">
+            <i class="fa-solid fa-times"></i>
+          </div>
+        </div>
+        <div class="info-card-content">
+          <div class="info-card-item">
+            <div class="info-card-label">Ideal para:</div>
+            <div id="info-card-crops">Maíz, Frijol</div>
+          </div>
+          <div class="info-card-item">
+            <div class="info-card-label">Suelo:</div>
+            <div id="info-card-soil">Franco-arcilloso</div>
+          </div>
+          <div class="info-card-item">
+            <div class="info-card-label">Clima:</div>
+            <div id="info-card-climate">Tropical seco</div>
+          </div>
+          <div class="info-card-item">
+            <div class="info-card-label">Rendimiento:</div>
+            <div id="info-card-yield">2.5 t/ha</div>
+          </div>
+        </div>
+        <div class="info-card-action">
+          <button class="info-card-button" id="download-geojson">
+            <i class="fa-solid fa-download"></i> Descargar GeoJSON
+          </button>
+        </div>
+      </div>
+      
+      <div class="footer">
+        © 2025 Mapa de Cultivos de Nicaragua | API de Cultivos
+      </div>
+    </div>
+    
+    <!-- Loading indicator -->
+    <div class="loading" id="loading">
+      <div class="loading-spinner"></div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script id="app-script">
+    // Initialize the map centered on Nicaragua
+    const map = L.map('map').setView([12.865416, -85.207229], 7);
+
+    // Add OpenStreetMap base layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Crop layers object to store each crop layer
+    const cropLayers = {};
+    const cropColors = {
+      'maiz': '#FFD700',
+      'frijol': '#8B4513',
+      'arroz': '#F5DEB3',
+      'cafe': '#A52A2A',
+      'cacao': '#654321',
+      'mani': '#DEB887',
+      'sorgo': '#CD853F',
+      'banano': '#FFFF00',
+      'hortalizas': '#228B22'
+    };
+
+    const cropIcons = {
+      'maiz': '🌽',
+      'frijol': '🌱',
+      'arroz': '🌾',
+      'cafe': '☕',
+      'cacao': '🍫',
+      'mani': '🥜',
+      'sorgo': '🌾',
+      'banano': '🍌',
+      'hortalizas': '🥬'
+    };
+
+    // Add department boundaries as GeoJSON
+    function fetchDepartmentBoundaries() {
+      // This would be a real API call in production
+      // For the prototype, we'll simulate loading and then add an outline of Nicaragua
+      setTimeout(() => {
+        // Simplified Nicaragua boundary
+        const nicaraguaBoundary = {
+          "type": "Feature",
+          "properties": { "name": "Nicaragua" },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [-87.6, 11.0], [-87.0, 11.0], [-86.5, 11.2], 
+                [-86.0, 11.4], [-85.5, 11.5], [-84.9, 11.2],
+                [-84.0, 11.0], [-83.6, 10.9], [-83.2, 10.8],
+                [-83.0, 10.7], [-82.8, 10.9], [-83.0, 11.2],
+                [-83.2, 11.5], [-83.3, 11.8], [-83.6, 12.1],
+                [-83.8, 12.5], [-83.7, 12.9], [-83.9, 13.2],
+                [-84.2, 13.5], [-84.5, 13.8], [-84.9, 14.0],
+                [-85.2, 14.2], [-85.5, 14.3], [-85.8, 14.2],
+                [-86.0, 14.0], [-86.2, 13.7], [-86.3, 13.4],
+                [-86.5, 13.1], [-86.7, 12.9], [-86.8, 12.7],
+                [-86.9, 12.5], [-87.1, 12.2], [-87.3, 12.0],
+                [-87.5, 11.8], [-87.6, 11.5], [-87.7, 11.2],
+                [-87.6, 11.0]
+              ]
+            ]
+          }
+        };
+
+        L.geoJSON(nicaraguaBoundary, {
+          style: {
+            color: '#666',
+            weight: 2,
+            fillColor: 'transparent'
+          }
+        }).addTo(map);
+        
+        // Hide loading indicator
+        document.getElementById('loading').style.display = 'none';
+        
+        // Load the crop layers
+        initializeCropLayers();
+      }, 1000);
+    }
+
+    // Initialize crop layers with dummy data
+    function initializeCropLayers() {
+      // For each crop, create a layer group
+      document.querySelectorAll('.crop-checkbox').forEach(checkbox => {
+        const cropName = checkbox.value;
+        cropLayers[cropName] = L.layerGroup().addTo(map);
+        
+        // Fetch crop data from "API"
+        fetchCropData(cropName);
+      });
+    }
+
+    // Fetch crop data from API (simulated for prototype)
+    function fetchCropData(cropName) {
+      // In production, this would call a real API
+      setTimeout(() => {
+        // Generate some random areas for the crop
+        const points = generateRandomPoints(cropName);
+        
+        points.forEach(point => {
+          const circle = L.circle([point.lat, point.lng], {
+            color: cropColors[cropName],
+            fillColor: cropColors[cropName],
+            fillOpacity: 0.5,
+            radius: 15000
+          }).addTo(cropLayers[cropName]);
+          
+          // Add click handler to show info
+          circle.on('click', (e) => {
+            showInfoCard(e.latlng, cropName);
+          });
+        });
+      }, 500);
+    }
+
+    // Generate random points for each crop (for prototype only)
+    function generateRandomPoints(cropName) {
+      const points = [];
+      const count = Math.floor(Math.random() * 5) + 3; // 3-7 points
+      
+      // Different regions for different crops
+      let centerLat, centerLng;
+      
+      switch(cropName) {
+        case 'maiz':
+          centerLat = 12.9;
+          centerLng = -85.1;
+          break;
+        case 'frijol':
+          centerLat = 13.1;
+          centerLng = -86.0;
+          break;
+        case 'arroz':
+          centerLat = 12.5;
+          centerLng = -84.3;
+          break;
+        case 'cafe':
+          centerLat = 13.2;
+          centerLng = -85.9;
+          break;
+        case 'cacao':
+          centerLat = 13.7;
+          centerLng = -84.8;
+          break;
+        case 'mani':
+          centerLat = 12.7;
+          centerLng = -86.3;
+          break;
+        case 'sorgo':
+          centerLat = 12.2;
+          centerLng = -86.1;
+          break;
+        case 'banano':
+          centerLat = 12.0;
+          centerLng = -83.8;
+          break;
+        case 'hortalizas':
+          centerLat = 12.4;
+          centerLng = -85.7;
+          break;
+        default:
+          centerLat = 12.5;
+          centerLng = -85.0;
+      }
+      
+      for (let i = 0; i < count; i++) {
+        const lat = centerLat + (Math.random() - 0.5) * 1.2;
+        const lng = centerLng + (Math.random() - 0.5) * 1.2;
+        points.push({ lat, lng });
+      }
+      
+      return points;
+    }
+
+    // Show info card with crop information
+    function showInfoCard(latlng, cropName) {
+      const infoCard = document.getElementById('info-card');
+      const location = findNearestMunicipality(latlng);
+      
+      document.getElementById('info-card-location').textContent = location;
+      
+      // Get suitable crops for this location
+      const suitableCrops = getSuitableCrops(location);
+      document.getElementById('info-card-crops').textContent = suitableCrops.join(', ');
+      
+      // Get soil type for this location
+      document.getElementById('info-card-soil').textContent = getSoilType(location);
+      
+      // Get climate for this location
+      document.getElementById('info-card-climate').textContent = getClimateType(location);
+      
+      // Get yield estimate for this location
+      document.getElementById('info-card-yield').textContent = getYieldEstimate(location);
+      
+      // Show the info card
+      infoCard.style.display = 'block';
+    }
+
+    // Find nearest municipality (simulated)
+    function findNearestMunicipality(latlng) {
+      // In production, this would use reverse geocoding or spatial calculations
+      // For prototype, we'll return a random municipality
+      const municipalities = [
+        'Juigalpa', 'Matagalpa', 'Jinotega', 'Estelí', 
+        'León', 'Granada', 'Managua', 'Bluefields', 
+        'Puerto Cabezas', 'Boaco', 'Chinandega'
+      ];
+      
+      return municipalities[Math.floor(Math.random() * municipalities.length)];
+    }
+
+    // Get suitable crops for a location (simulated)
+    function getSuitableCrops(location) {
+      // In production, this would come from the API
+      // For prototype, we'll return random crops
+      const allCrops = ['Maíz', 'Frijol', 'Arroz', 'Café', 'Cacao', 'Maní', 'Sorgo', 'Banano', 'Hortalizas'];
+      const count = Math.floor(Math.random() * 3) + 2; // 2-4 crops
+      
+      // Shuffle and take first few
+      return allCrops
+        .sort(() => 0.5 - Math.random())
+        .slice(0, count);
+    }
+
+    // Get soil type for a location (simulated)
+    function getSoilType(location) {
+      const soilTypes = [
+        'Franco-arcilloso', 'Arcilloso', 'Arenoso',
+        'Franco-arenoso', 'Aluvial', 'Volcánico'
+      ];
+      
+      return soilTypes[Math.floor(Math.random() * soilTypes.length)];
+    }
+
+    // Get climate type for a location (simulated)
+    function getClimateType(location) {
+      const climateTypes = [
+        'Tropical seco', 'Tropical húmedo', 'Subtropical',
+        'Montañoso', 'Tropical de sabana'
+      ];
+      
+      return climateTypes[Math.floor(Math.random() * climateTypes.length)];
+    }
+
+    // Get yield estimate for a location (simulated)
+    function getYieldEstimate(location) {
+      const yield = (Math.random() * 4 + 1).toFixed(1);
+      return `${yield} t/ha`;
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      // Sidebar toggle
+      const sidebarToggle = document.getElementById('sidebar-toggle');
+      const sidebar = document.getElementById('sidebar');
+      
+      sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+        sidebarToggle.classList.toggle('collapsed');
+      });
+      
+      // Close info card
+      document.getElementById('info-card-close').addEventListener('click', () => {
+        document.getElementById('info-card').style.display = 'none';
+      });
+      
+      // Download GeoJSON button
+      document.getElementById('download-geojson').addEventListener('click', () => {
+        alert('Esta función estará disponible cuando conectes a la API real.');
+      });
+      
+      // Crop checkboxes
+      document.querySelectorAll('.crop-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+          const cropName = e.target.value;
+          if (e.target.checked) {
+            map.addLayer(cropLayers[cropName]);
+          } else {
+            map.removeLayer(cropLayers[cropName]);
+          }
+        });
+      });
+      
+      // Month filter
+      document.getElementById('month-select').addEventListener('change', (e) => {
+        const month = e.target.value;
+        if (month) {
+          alert(`Filtrado por mes: ${e.target.options[e.target.selectedIndex].text}. Esta función estará disponible cuando conectes a la API real.`);
+        }
+      });
+      
+      // Department filter
+      document.getElementById('department-select').addEventListener('change', (e) => {
+        const department = e.target.value;
+        if (department) {
+          alert(`Filtrado por departamento: ${e.target.options[e.target.selectedIndex].text}. Esta función estará disponible cuando conectes a la API real.`);
+        }
+      });
+      
+      // Save bookmark
+      document.getElementById('save-bookmark').addEventListener('click', () => {
+        const bookmarkName = prompt('Nombre para esta vista:');
+        if (bookmarkName) {
+          // In production, this would save the current map state
+          alert(`Vista "${bookmarkName}" guardada. Esta función estará disponible cuando conectes a la API real.`);
+        }
+      });
+      
+      // Initialize map
+      fetchDepartmentBoundaries();
+    });
+  </script>
+</body>
+</html>
