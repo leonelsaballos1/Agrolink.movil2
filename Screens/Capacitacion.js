@@ -179,83 +179,95 @@ export default function CapacitacionesEnLinea() {
   );
 }
 
+import { StyleSheet } from "react-native";
+
 const styles = StyleSheet.create({
-  scrollContent: { 
-    padding: 16, 
-    paddingTop: 60, 
-    backgroundColor: "#E8F5E9" 
+  // Contenido principal del ScrollView
+  scrollContent: {
+    padding: 16,
+    paddingTop: 60,
+    backgroundColor: "#E8F5E9",
   },
 
-  header: { 
-    fontSize: 22, 
-    fontWeight: "bold", 
-    marginBottom: 16, 
-    textAlign: "center", 
-    color: "#2E7D32" 
+  // Encabezado general
+  header: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 16,
+    textAlign: "center",
+    color: "#2E7D32",
   },
 
-  card: { 
-    backgroundColor: "#fff", 
-    padding: 16, 
-    marginBottom: 16, 
-    borderRadius: 12, 
-    elevation: 3 
+  // Tarjetas de contenido
+  card: {
+    backgroundColor: "#fff",
+    padding: 16,
+    marginBottom: 16,
+    borderRadius: 12,
+    elevation: 3,
   },
 
-  sectionHeader: { 
-    fontWeight: "bold", 
-    marginBottom: 4, 
-    fontSize: 16, 
-    color: "#388E3C" 
+  // Títulos de secciones dentro de las tarjetas
+  sectionHeader: {
+    fontWeight: "bold",
+    marginBottom: 4,
+    fontSize: 16,
+    color: "#388E3C",
   },
 
-  linkButton: { 
+  // Botones con icono tipo enlace
+  linkButton: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#2196F3",
-    padding: 12, 
-    borderRadius: 8, 
-    marginTop: 10 
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 10,
   },
 
-  linkText: { 
-    color: "#fff", 
-    marginLeft: 8, 
-    fontWeight: "bold", 
-    flexShrink: 1 
+  linkText: {
+    color: "#fff",
+    marginLeft: 8,
+    fontWeight: "bold",
+    flexShrink: 1,
   },
 
-  linkInline: { 
-    color: "#1976D2", 
-    marginTop: 4, 
-    fontWeight: "bold" 
+  // Enlaces dentro del texto
+  linkInline: {
+    color: "#1976D2",
+    marginTop: 4,
+    fontWeight: "bold",
   },
 
-  searchInput: { 
-    backgroundColor: "#fff", 
-    borderRadius: 8, 
-    padding: 10, 
-    marginBottom: 20, 
-    borderWidth: 1, 
-    borderColor: "#ccc" 
+  // Input de búsqueda
+  searchInput: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "#ccc",
   },
 
-  actions: { 
+  // Contenedor de acciones (editar, eliminar, etc.)
+  actions: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 12 
+    marginTop: 12,
   },
 
-  actionButton: { 
+  // Botón de acción con icono
+  actionButton: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 10, 
-    borderRadius: 8 
+    padding: 10,
+    borderRadius: 8,
   },
 
-  actionText: { 
-    color: "#fff", 
-    marginLeft: 6, 
-    fontWeight: "bold" 
+  actionText: {
+    color: "#fff",
+    marginLeft: 6,
+    fontWeight: "bold",
   },
 });
+

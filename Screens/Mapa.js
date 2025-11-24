@@ -202,38 +202,107 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
-  title: { fontSize: 18, fontWeight: 'bold', textAlign: 'center', marginTop: 10 },
-  buscador: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f1f1f1',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    margin: 10,
+
+  container: { 
+    flex: 1, 
+    backgroundColor: "#fff" 
   },
-  icono: { marginRight: 8 },
-  input: { flex: 1, fontSize: 16, paddingVertical: 8 },
-  leyenda: { maxHeight: 50, marginBottom: 5 },
-  checkboxContainer: { flexDirection: 'row', alignItems: 'center', marginHorizontal: 5 },
-  checkboxLabel: { fontSize: 14 },
-  map: { flex: 1, borderRadius: 8 },
-  callout: { width: 200 },
-  calloutTitle: { fontWeight: 'bold', marginBottom: 5 },
-  noResult: { textAlign: 'center', color: 'gray', margin: 10 },
+
+  title: { 
+    fontSize: 18, 
+    fontWeight: "bold", 
+    textAlign: "center", 
+    marginTop: 10,
+    color: "#333"
+  },
+
+  buscador: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f1f1f1",
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    marginHorizontal: 12,
+    marginTop: 12,
+    marginBottom: 6,
+    paddingVertical: 6,
+  },
+
+  icono: { 
+    marginRight: 8 
+  },
+
+  input: { 
+    flex: 1, 
+    fontSize: 16, 
+    paddingVertical: 8, 
+    color: "#333"
+  },
+
+  leyenda: { 
+    maxHeight: 50, 
+    marginBottom: 5,
+    justifyContent: "center"
+  },
+
+  checkboxContainer: { 
+    flexDirection: "row", 
+    alignItems: "center", 
+    marginHorizontal: 8 
+  },
+
+  checkboxLabel: { 
+    fontSize: 14, 
+    color: "#222" 
+  },
+
+  map: { 
+    flex: 1, 
+    borderRadius: 10, 
+    margin: 10 
+  },
+
+  callout: { 
+    width: 200 
+  },
+
+  calloutTitle: { 
+    fontWeight: "bold", 
+    marginBottom: 5,
+    fontSize: 15,
+    color: "#000"
+  },
+
+  noResult: { 
+    textAlign: "center", 
+    color: "gray", 
+    marginVertical: 10 
+  },
+
   zoomControls: {
-    position: 'absolute',
+    position: "absolute",
     top: 20,
     right: 10,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
+    alignItems: "center",
+    backgroundColor: "transparent",
   },
+
   zoomButton: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 10,
     marginVertical: 5,
-    borderRadius: 5,
-    elevation: 3,
+    borderRadius: 8,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
   },
-  zoomText: { fontSize: 20, fontWeight: 'bold' },
+
+  zoomText: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    color: "#333" 
+  },
+
 });

@@ -233,26 +233,40 @@ export default function ChatbotVoice() {
   );
 }
 
+import { StyleSheet } from "react-native";
+
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#F0F4F8" },
+  // Contenedor principal
+  container: {
+    flex: 1,
+    backgroundColor: "#F0F4F8",
+  },
+
+  // Mensajes (base)
   message: {
     padding: 10,
     borderRadius: 8,
     marginVertical: 5,
     marginHorizontal: 10,
   },
+
+  // Mensaje del usuario
   userMessage: {
     backgroundColor: "#E8F5E9",
     alignSelf: "flex-end",
     borderLeftWidth: 4,
     borderLeftColor: "#2F855A",
   },
+
+  // Mensaje del bot
   botMessage: {
     backgroundColor: "#fff",
     alignSelf: "flex-start",
     borderLeftWidth: 4,
     borderLeftColor: "#8D6E63",
   },
+
+  // Fila de entrada de texto + botón
   inputRow: {
     flexDirection: "row",
     alignItems: "flex-end",
@@ -261,19 +275,20 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     backgroundColor: "#fff",
   },
- input: {
+
+  // Caja de texto del chat
+  input: {
     flex: 10,
-    borderWidth: 10,
+    borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 25,
     paddingHorizontal: 15,
     paddingVertical: 20,
     backgroundColor: "#fff",
-    textAlignVertical: "top", // ✅ Importante en Android
-     // para que no sea tan pequeño
+    textAlignVertical: "top", // Android lo necesita
   },
 
-
+  // Botón de enviar
   button: {
     backgroundColor: "#2F855A",
     paddingHorizontal: 15,
@@ -281,12 +296,17 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginLeft: 5,
   },
+
+  // Indicador cuando está grabando audio
   recording: {
     backgroundColor: "red",
   },
+
+  // Botón de limpiar todo
   clearButton: {
     flexDirection: "row",
     justifyContent: "center",
     marginVertical: 10,
   },
 });
+

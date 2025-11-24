@@ -79,85 +79,106 @@ export default function Home() {
   );
 }
 
+
 const styles = StyleSheet.create({
+  // Contenedor general
   container: {
     flex: 1,
-    backgroundColor: '#ffffffff',
+    backgroundColor: "#ffffffff",
     paddingTop: 50,
     paddingHorizontal: 20,
   },
+
+  // Encabezado (texto centrado + campana a la derecha)
   headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center', // centramos el texto
-    alignItems: 'center',
-    position: 'relative', // para que la campana absoluta se ubique respecto a este contenedor
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
   },
+
   headerText: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
   },
+
+  // Título principal
   title: {
     fontSize: 22,
-    fontWeight: 'bold',
-    fontStyle: 'italic',
-    color: '#000',
-    textAlign: 'center',
+    fontWeight: "bold",
+    fontStyle: "italic",
+    color: "#000",
+    textAlign: "center",
   },
+
+  // Título destacado
   titleHighlight: {
     fontSize: 24,
-    fontWeight: 'bold',
-    fontStyle: 'italic',
+    fontWeight: "bold",
+    fontStyle: "italic",
     marginBottom: 6,
-    textAlign: 'center',
+    textAlign: "center",
   },
+
+  // Subtítulo
   subtitle: {
     fontSize: 14,
-    color: '#000',
-    textAlign: 'center',
+    color: "#000",
+    textAlign: "center",
   },
+
+  // Contenedor de la campana
   bellContainer: {
-    position: 'absolute',
-    top: -10, // sube la campana
-    right: 0, // pegada a la derecha
+    position: "absolute",
+    top: -10,
+    right: 0,
     zIndex: 1,
   },
+
+  // Indicador de notificación
   notificationBadge: {
-    position: 'absolute',
+    position: "absolute",
     top: -4,
     right: -4,
-    backgroundColor: 'red',
+    backgroundColor: "red",
     width: 18,
     height: 18,
     borderRadius: 9,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
+
   badgeText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
+
+  // Grid de tarjetas
   grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
     marginTop: 30,
   },
+
+  // Tarjetas del menú
   card: {
-    width: '45%',
+    width: "45%",
     height: 120,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderColor: "#000",
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 20,
   },
+
   cardText: {
     marginTop: 10,
     fontSize: 14,
-    fontWeight: '600',
-    color: '#000',
+    fontWeight: "600",
+    color: "#000",
   },
 });

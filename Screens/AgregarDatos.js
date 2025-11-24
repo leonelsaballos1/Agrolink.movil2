@@ -114,8 +114,17 @@ const EditarPerfil = ({ navigation, route }) => {
   );
 };
 
+import { StyleSheet } from "react-native";
+
 const styles = StyleSheet.create({
-  container: { padding: 20, backgroundColor: "#ffffffff", flexGrow: 1 },
+  // Contenedor principal
+  container: {
+    padding: 20,
+    backgroundColor: "#ffffffff",
+    flexGrow: 1,
+  },
+
+  // Encabezado
   header: {
     flexDirection: "row",
     justifyContent: "space-around",
@@ -126,7 +135,16 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     elevation: 6,
   },
-  titulo: { fontSize: 24, fontWeight: "700", color: "#00796b", textAlign: "center" },
+
+  // Título principal
+  titulo: {
+    fontSize: 24,
+    fontWeight: "700",
+    color: "#00796b",
+    textAlign: "center",
+  },
+
+  // Grupo de inputs con icono
   inputGroup: {
     flexDirection: "row",
     alignItems: "center",
@@ -138,8 +156,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     elevation: 3,
   },
-  inputIcon: { marginRight: 8 },
-  input: { flex: 1, height: 48, fontSize: 16, color: "#333" },
+
+  // Icono dentro del input
+  inputIcon: {
+    marginRight: 8,
+  },
+
+  // Campo de texto
+  input: {
+    flex: 1,
+    height: 48,
+    fontSize: 16,
+    color: "#333",
+  },
+
+  // Botón de guardar
   botonGuardar: {
     backgroundColor: "#4caf50",
     marginTop: 20,
@@ -150,7 +181,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     elevation: 8,
   },
-  botonTexto: { fontSize: 18, color: "white", fontWeight: "700" },
+
+  // Texto del botón
+  botonTexto: {
+    fontSize: 18,
+    color: "white",
+    fontWeight: "700",
+  },
 });
 
 export default EditarPerfil;

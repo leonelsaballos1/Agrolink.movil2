@@ -84,72 +84,90 @@ export default function InfoCultivos() {
   );
 }
 
+
 const styles = StyleSheet.create({
+  // Contenedor general
   container: {
     flex: 1,
-    backgroundColor: '#FFFDF6', // Fondo crema pastel
+    backgroundColor: "#FFFDF6", // Fondo crema pastel
     paddingVertical: 20,
   },
+
+  // Título principal
   header: {
     fontSize: 28,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#333', // Letras negras suaves
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#333",
     marginBottom: 25,
   },
+
+  // Tarjeta
   card: {
-    backgroundColor: '#D8F3DC', // Verde menta pastel
+    backgroundColor: "#D8F3DC", // Verde menta pastel
     borderRadius: 25,
     marginHorizontal: 15,
     marginBottom: 30,
     padding: 15,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.15,
     shadowRadius: 8,
     elevation: 6,
     borderWidth: 1,
-    borderColor: '#CDE8CF',
+    borderColor: "#CDE8CF",
   },
+
+  // Fila con imagen e info
   row: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
   },
+
+  // Imagen redonda
   image: {
     width: 120,
     height: 120,
     borderRadius: 80,
     marginRight: 15,
     borderWidth: 2,
-    borderColor: '#FFF',
+    borderColor: "#FFF",
   },
+
+  // Contenedor del texto de la persona
   textContainer: {
     flex: 1,
   },
+
   nombre: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1B4332',
+    fontWeight: "bold",
+    color: "#1B4332",
   },
+
   fecha: {
     fontSize: 13,
-    fontWeight: '600',
-    color: '#555',
+    fontWeight: "600",
+    color: "#555",
   },
+
+  // Secciones de información
   infoSection: {
     marginTop: 10,
   },
+
   label: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#2D6A4F',
+    fontWeight: "bold",
+    color: "#2D6A4F",
     marginTop: 8,
   },
+
   texto: {
     fontSize: 15,
-    color: '#222',
-    textAlign: 'justify',
+    color: "#222",
+    textAlign: "justify",
     lineHeight: 22,
     marginBottom: 5,
   },
